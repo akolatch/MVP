@@ -19,8 +19,8 @@ const recipesSchema = new mongooser.Schema({
   version: { type: Number, index: true },
   created_by: { type: Number, index: true },
   source: String,
-  created_at: Date,
-  Updated_at: Date,
+  created_at: { type: Number, index: true },
+  updated_at: { type: Number, index: true },
 });
 
 const userSchema = new mongoose.Schema({

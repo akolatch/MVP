@@ -24,15 +24,19 @@ const recipesSchema = new mongoose.Schema({
   updated_at: { type: Number, index: true },
 });
 
-const userSchema = new mongoose.Schema({
-  name: String,
-  user_id: Number,
+const recipeListsSchema = new mongoose.Schema({
+  user_id: { type: Number, index: true },
+  recipe_id: { type: Number, index: true },
 });
+// const userSchema = new mongoose.Schema({
+//   name: String,
+//   user_id: Number,
+// });
 
 const Recipe = mongoose.model('Recipe', recipesSchema);
-const User = mongoose.model('User', userSchema);
+const RecipeList = mongoose.model('RecipeList', recipeListsSchema);
 
 module.exports = {
   Recipe,
-  User,
+  RecipeList,
 };

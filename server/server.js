@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, './../client/dist')));
-app.use('/recipe', routes);
+app.use('/', routes);
 
 app.get('/', (req, res) => {
   res.json('Hello World');

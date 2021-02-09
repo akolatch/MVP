@@ -7,13 +7,14 @@ mongoose.connect(mongoUri, {
   useCreateIndex: true,
 });
 
-const recipesSchema = new mongooser.Schema({
+const recipesSchema = new mongoose.Schema({
   name: { type: String, index: true },
   recipe_id: { type: Number, index: true },
   ingredientLis: Array,
   steps: Array,
   tools: Array,
   time: Number,
+  active_time: Number,
   servings: Number,
   difficulty: Number,
   version: { type: Number, index: true },

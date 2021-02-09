@@ -13,11 +13,11 @@ module.exports = {
   },
   addRecipe: async (recipeData) => {
     // if this is a brand new recipe not a version
-    if (!recipeData.hasOwnProperty(recipe_id)) {
+    if (!recipeData.hasOwnProperty('recipe_id')) {
       const { recipe_id } = await Recipe.findOne({}, { recipe_id: 1, _id: 0 })
         .sort({ recipe_id: 1 })
         .lean();
-      recipeData.recipe_id = nextId;
+      recipeData.recipe_id = recipe_id + 1;
     }
     await Recipe.create(recipeData);
   },

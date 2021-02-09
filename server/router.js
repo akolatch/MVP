@@ -1,10 +1,13 @@
 const router = require('express').Router();
 const controller = require('./controllers');
 
-router.route('/:user').get(controller.getRecipeList).post(controller.addRecipe);
+router
+  .route('/:user/list')
+  .get(controller.getRecipeList)
+  .post(controller.addRecipe);
 
 router
-  .route('/:id')
+  .route('/:id/recipe')
   .put(controller.updateRecipe)
   .delete(controller.deleteOneVersion);
 

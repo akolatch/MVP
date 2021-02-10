@@ -1,13 +1,19 @@
 import React, { useContext } from 'react';
-import { RecipeListContext } from '../context/RecipeListContext.jsx';
+import { RecipeContext } from './RecipeContext.jsx';
+import Recipe from './RecipeListItem.jsx';
 
 const RecipeList = () => {
-  const [recipeList, setRecipeList] = useContext(RecipeListContext);
-  console.log(recipeList);
+  const { list } = useContext(RecipeContext);
+  const [recipeList] = list;
   return (
     <ul>
       {recipeList.map((recipe, i) => (
-        <li key={recipe._id}>{recipe.name}</li>
+        <Recipe
+          key={recipe._id}
+          name={recipe.versions[0].name}
+          versions={recipe.versions.map((v) => v.version)}
+          index={i}
+        />
       ))}
     </ul>
   );

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { RecipeListProvider } from '../context/RecipeListContext.jsx';
+import { RecipeProvider } from './RecipeContext.jsx';
 import RecipeList from './RecipeList';
 export const App = () => {
   return (
-    <RecipeListProvider>
+    <div className='main-container'>
       <h1>Recipes</h1>
       <div>New Recipe</div>
-      <RecipeList />
-      <div>Current Recipe</div>
-    </RecipeListProvider>
+      <RecipeProvider>
+        <div>Current Recipe</div>
+        <RecipeList />
+      </RecipeProvider>
+    </div>
   );
 };
 

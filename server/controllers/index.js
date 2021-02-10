@@ -4,7 +4,9 @@ module.exports = {
   getRecipeList: async (req, res) => {
     try {
       const userId = parseInt(req.params.user);
-      const sortBy = req.query;
+      const sortBy = !req.query.hasOwnProperty('noSort')
+        ? req.query
+        : undefined;
       const recipeList = await models.findAllRecipes(userId, sortBy);
       res.status(200).json(recipeList);
     } catch (err) {

@@ -9,25 +9,29 @@ module.exports = {
       version: 1,
     }
   ) => {
-    return await RecipeList.aggregate()
-      .match({ user_id })
-      .lookup({
-        from: 'recipes',
-        let: { recipe_id: '$recipe_id' },
-        pipeline: [
-          {
-            $match: {
-              $expr: {
-                $eq: ['$$recipe_id', '$recipe_id'],
+    try {
+      return await RecipeList.aggregate()
+        .match({ user_id })
+        .lookup({
+          from: 'recipes',
+          let: { recipe_id: '$recipe_id' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ['$$recipe_id', '$recipe_id'],
+                },
               },
             },
-          },
-          {
-            $sort: sortBy,
-          },
-        ],
-        as: 'versions',
-      });
+            {
+              $sort: sortBy,
+            },
+          ],
+          as: 'versions',
+        });
+    } catch (err) {
+      throw err;
+    }
   },
   addRecipe: async (recipeData) => {
     // if this is a brand new recipe not a version

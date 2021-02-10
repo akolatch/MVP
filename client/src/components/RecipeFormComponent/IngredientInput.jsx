@@ -1,32 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const IngredientInput = () => {
-  const [ingredient, setIngredient] = useState({});
-  const onChange = (e) => {
-    setIngredient((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
+const IngredientInput = ({ ingredient, onChange }) => {
   return (
     <div>
       <input
         type='text'
         name='amount'
+        placeholder='amount'
         value={ingredient.amount}
-        onChange={onchange}
+        onChange={onChange}
       />
       <input
         type='text'
         name='unit'
+        placeholder='units'
         value={ingredient.unit}
-        onChange={onchange}
+        onChange={onChange}
       />
       <input
         type='text'
         name='ingredient'
+        placeholder='ingredient'
         value={ingredient.ingredient}
-        onChange={onchange}
+        onChange={onChange}
       />
     </div>
   );

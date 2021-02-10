@@ -7,6 +7,19 @@ export const RecipeProvider = (props) => {
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [currentVersion, setCurrentVersion] = useState(0);
   const [displayRecipeForm, setDisplayRecipeForm] = useState(false);
+  const [newRecipe, setNewRecipe] = useState({
+    name: '',
+    user_id: 1,
+  });
+
+  if (recipeList.length > 0) {
+    newRecipe.recipe_id = (() => {
+      const sorted = recipeList
+        .slice()
+        .sort((a, b) => b.recipe_id - a.recipe_id);
+      return sorted[0].recipe_id + 1;
+    })();
+  }
 
   useEffect(() => {
     axios.get('/1/list', { params: { noSort: true } }).then(({ data }) => {
@@ -21,6 +34,7 @@ export const RecipeProvider = (props) => {
         recipe: [currentRecipe, setCurrentRecipe],
         version: [currentVersion, setCurrentVersion],
         displayForm: [displayRecipeForm, setDisplayRecipeForm],
+        newUserRecipe: [newRecipe, setNewRecipe],
       }}
     >
       {props.children}

@@ -2,6 +2,10 @@ import React, { useState, useContext } from 'react';
 import { RecipeContext } from '../RecipeContext';
 import OptionalField from './OptionalField';
 import OptionalFieldHook from './OptionalFieldHook';
+import NewVersionHook from './NewVersionHook';
+import IngredientInputHook from './IngredientInputHook';
+import IngredientInput from './IngredientInput';
+import AddedIngredient from '../RecipeDisplayComponent/Ingredient';
 
 const literalFields = [
   'servings',
@@ -12,26 +16,15 @@ const literalFields = [
 ];
 
 const RecipeForm = () => {
-  const { list } = useContext(RecipeContext);
-  const [recipeList] = list;
-  const [newRecipe, setNewRecipe] = useState({
-    name: '',
-    user_id: 1,
-    recipe_id: (() => {
-      const sorted = recipeList
-        .slice()
-        .sort((a, b) => b.recipe_id - a.recipe_id);
-      return sorted[0].recipe_id + 1;
-    })(),
-  });
-
-  const [newVersion, setNewVersion] = useState({
-    recipe_id: newRecipe.recipe_id,
-    ingredientList: [],
-    tools: [],
-    steps: [],
-    user_id: 1,
-  });
+  const { newUserRecipe } = useContext(RecipeContext);
+  const [newRecipe, setNewRecipe] = newUserRecipe;
+  const [newVersion, inputField] = NewVersionHook(newRecipe.recipe_id);
+  const [displayField, toggleOptionalField] = OptionalFieldHook();
+  const [
+    newIngredient,
+    setNewIngredient,
+    newInputIngredient,
+  ] = IngredientInputHook();
 
   const setName = (e) => {
     setNewRecipe((prevState) => ({
@@ -41,16 +34,15 @@ const RecipeForm = () => {
     console.log(newRecipe);
   };
 
-  const setVersionField = (e) => {
-    setNewVersion((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-    console.log(newVersion);
+  const addIngredient = (field) => {
+    const value = [...newVersion.ingredientList, newIngredient];
+    inputField(field, value);
+    setNewIngredient({
+      amount: '',
+      unit: '',
+      ingredient: '',
+    });
   };
-
-  const [displayField, toggleOptionalField] = OptionalFieldHook();
-
   return (
     <div>
       <form action=''>
@@ -67,11 +59,28 @@ const RecipeForm = () => {
             display={displayField[field]}
             toggleView={toggleOptionalField}
             version={newVersion}
-            onChange={setVersionField}
+            onChange={inputField}
             key={i}
           />
         ))}
         <label htmlFor=''>Ingredients</label>
+        <br />
+        {newVersion.ingredientList.map((ingredient) => (
+          <AddedIngredient ingredient={ingredient} />
+        ))}
+        <IngredientInput
+          ingredient={newIngredient}
+          onChange={newInputIngredient}
+        />
+
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            addIngredient('ingredientList');
+          }}
+        >
+          Add Ingredients
+        </button>
       </form>
     </div>
   );

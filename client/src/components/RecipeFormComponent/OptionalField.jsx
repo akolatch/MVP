@@ -10,7 +10,9 @@ const OptionalField = ({ field, display, toggleView, version, onChange }) => (
           type='text'
           name={field}
           value={version[field]}
-          onChange={onChange}
+          onChange={(e) => {
+            onChange(field, e.target.value);
+          }}
         />
         <button
           onClick={(e) => {

@@ -2,19 +2,6 @@ import React, { useContext } from 'react';
 import { RecipeContext } from '../RecipeContext.jsx';
 import Ingredient from './Ingredient.jsx';
 import minutesToHours from './timeConverter.js';
-// const minutesToHours = (inMinutes) => {
-//   if (inMinutes >= 60) {
-//     const hours = Math.floor(inMinutes / 60);
-//     const minutes = inMinutes - hours * 60;
-//     const hourString = hours > 1 ? `${hours} hours` : `${hours} hour`;
-//     return minutes >= 2
-//       ? `${hourString}, ${minutes} minutes`
-//       : minutes === 1
-//       ? `${hourString}, ${minutes} minute`
-//       : hourString;
-//   }
-//   return inMinutes > 1 ? `${inMinutes} minutes` : `${inMinutes} minute`;
-// };
 
 const DisplayedRecipe = () => {
   const { recipe, version } = useContext(RecipeContext);
@@ -29,7 +16,7 @@ const DisplayedRecipe = () => {
   )
     ? minutesToHours(currentRecipe.versions[currentVersion].active_time)
     : null;
-  console.log(currentRecipe.versions[currentVersion]);
+
   return (
     <div>
       <h1>{currentRecipe.name}</h1>

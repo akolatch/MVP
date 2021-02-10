@@ -8,9 +8,8 @@ mongoose.connect(mongoUri, {
 });
 
 const recipesSchema = new mongoose.Schema({
-  name: { type: String, index: true },
   recipe_id: { type: Number, index: true },
-  ingredientLis: Array,
+  ingredientList: Array,
   steps: Array,
   tools: Array,
   time: Number,
@@ -18,13 +17,14 @@ const recipesSchema = new mongoose.Schema({
   servings: Number,
   difficulty: Number,
   version: { type: Number, index: true },
-  created_by: { type: Number, index: true },
+  user_id: { type: Number, index: true },
   source: String,
   created_at: { type: Number, index: true },
   updated_at: { type: Number, index: true },
 });
 
 const recipeListsSchema = new mongoose.Schema({
+  name: { type: String, index: true },
   user_id: { type: Number, index: true },
   recipe_id: { type: Number, index: true },
 });

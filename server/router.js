@@ -4,13 +4,14 @@ const controller = require('./controllers');
 router
   .route('/:user/list')
   .get(controller.getRecipeList)
-  .post(controller.addRecipe);
+  .post(controller.addRecipe)
+  .delete(controller.deleteRecipe);
+
+router.route('/version').post(controller.addVersion);
 
 router
-  .route('/:id/recipe')
-  .put(controller.updateRecipe)
-  .delete(controller.deleteOneVersion);
-
-router.route('/:recipeId').delete(controller.deleteAllVersions);
+  .route('/version/:id')
+  .put(controller.updateVersion)
+  .delete(controller.deleteVersion);
 
 module.exports = router;

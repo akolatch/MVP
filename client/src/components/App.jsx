@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { RecipeProvider } from './RecipeContext.jsx';
-import RecipeList from './RecipeList';
+import Main from './MainContainer.jsx';
 export const App = () => {
   return (
     <div className='main-container'>
       <h1>Recipes</h1>
-      <div>New Recipe</div>
       <RecipeProvider>
-        <div>Current Recipe</div>
-        <RecipeList />
+        <Main />
       </RecipeProvider>
     </div>
   );

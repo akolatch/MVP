@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { RecipeContext } from './RecipeContext';
+import { RecipeContext } from '../RecipeContext';
 import OptionalField from './OptionalField';
+import OptionalFieldHook from './OptionalFieldHook';
 
 const literalFields = [
   'servings',
@@ -23,19 +24,13 @@ const RecipeForm = () => {
       return sorted[0].recipe_id + 1;
     })(),
   });
+
   const [newVersion, setNewVersion] = useState({
     recipe_id: newRecipe.recipe_id,
     ingredientList: [],
     tools: [],
     steps: [],
     user_id: 1,
-  });
-  const [displayField, setDisplayField] = useState({
-    servings: false,
-    source: false,
-    difficulty: false,
-    time: false,
-    active_time: false,
   });
 
   const setName = (e) => {
@@ -54,12 +49,8 @@ const RecipeForm = () => {
     console.log(newVersion);
   };
 
-  const toggleOptionalField = (field, flip) => {
-    setDisplayField((prevState) => ({
-      ...prevState,
-      [field]: flip,
-    }));
-  };
+  const [displayField, toggleOptionalField] = OptionalFieldHook();
+
   return (
     <div>
       <form action=''>

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { RecipeContext } from './RecipeContext.jsx';
-import RecipeList from './RecipeList';
-import DisplayRecipe from './DisplayedRecipe.jsx';
-import RecipeForm from './RecipeForm.jsx';
+import RecipeList from './RecipeListComponent/RecipeList.jsx';
+import DisplayRecipe from './RecipeDisplayComponent/DisplayedRecipe.jsx';
+import RecipeForm from './RecipeFormComponent/RecipeForm.jsx';
 
 const MainContainer = () => {
   const { recipe, displayForm } = useContext(RecipeContext);

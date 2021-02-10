@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { RecipeContext } from './RecipeContext.jsx';
+import { RecipeContext } from '../RecipeContext.jsx';
 
 const RecipeList = ({ name, versions, index }) => {
   const { list, recipe, version } = useContext(RecipeContext);

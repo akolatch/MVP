@@ -14,11 +14,11 @@ const MainContainer = () => {
   };
   return (
     <div>
-      <button onClick={showForm}>New Recipe</button>
       {displayRecipeForm ? (
         <RecipeForm />
       ) : (
         <div>
+          <button onClick={showForm}>New Recipe</button>
           {currentRecipe ? <DisplayRecipe /> : null}
           <RecipeList />
         </div>

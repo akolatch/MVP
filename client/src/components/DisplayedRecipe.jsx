@@ -28,14 +28,14 @@ const DisplayedRecipe = () => {
   )
     ? minutesToHours(currentRecipe.versions[currentVersion].active_time)
     : null;
-  console.log(currentRecipe.versions[currentVersion].ingredientList);
+  console.log(currentRecipe.versions[currentVersion]);
   return (
     <div>
       <h1>{currentRecipe.name}</h1>
       <ul>
         {currentRecipe.versions[currentVersion].hasOwnProperty('difficulty') ? (
           <li>
-            {`Difficulty: ${currentRecipe.versions[currentVersion].difficulty}`}
+            {`Difficulty: ${currentRecipe.versions[currentVersion].difficulty} out of 5`}
           </li>
         ) : null}
         {time ? <li>{`Total Time : ${time}`}</li> : null}

@@ -10,6 +10,7 @@ import ToolHook from './ToolsHook';
 import ExpandingFields from './ExpandingArrayFields';
 import StepHook from './StepsHook';
 import axios from 'axios';
+
 const literalFields = [
   'servings',
   'time',
@@ -75,7 +76,8 @@ const RecipeForm = () => {
       })
       .then(({ data }) => {
         list[1](data);
-      });
+      })
+      .then(() => {});
   };
 
   return (
@@ -93,9 +95,9 @@ const RecipeForm = () => {
         <br />
         <label htmlFor=''>Ingredients</label>
         <br />
-        {newVersion.ingredientList.map(({ ingredient, i }) => (
-          <AddedIngredient key={i} ingredient={ingredient} />
-        ))}
+        {newVersion.ingredientList.map((ingredient, i) => {
+          return <AddedIngredient key={i} ingredient={ingredient} />;
+        })}
         <IngredientInput
           ingredient={newIngredient}
           onChange={newInputIngredient}

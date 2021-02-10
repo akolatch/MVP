@@ -1,17 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { RecipeContext } from './RecipeContext.jsx';
 import RecipeList from './RecipeList';
 import DisplayRecipe from './DisplayedRecipe.jsx';
+import RecipeForm from './RecipeForm.jsx';
 
 const MainContainer = () => {
-  const { recipe } = useContext(RecipeContext);
+  const { recipe, displayForm } = useContext(RecipeContext);
   const [currentRecipe, setCurrentRecipe] = recipe;
-  console.log(currentRecipe);
+  const [displayRecipeForm, setDisplayRecipeForm] = displayForm;
+
+  const showForm = () => {
+    setDisplayRecipeForm(true);
+  };
   return (
     <div>
-      <div>New Recipe</div>
-      {currentRecipe ? <DisplayRecipe /> : null}
-      <RecipeList />
+      <button onClick={showForm}>New Recipe</button>
+      {displayRecipeForm ? (
+        <RecipeForm />
+      ) : (
+        <div>
+          {currentRecipe ? <DisplayRecipe /> : null}
+          <RecipeList />
+        </div>
+      )}
     </div>
   );
 };

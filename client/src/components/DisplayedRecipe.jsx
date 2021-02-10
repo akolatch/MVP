@@ -28,10 +28,10 @@ const DisplayedRecipe = () => {
   )
     ? minutesToHours(currentRecipe.versions[currentVersion].active_time)
     : null;
-  console.log(currentRecipe.versions[currentVersion]);
+  console.log(currentRecipe.versions[currentVersion].ingredientList);
   return (
     <div>
-      <h1>{currentRecipe.versions[currentVersion].name}</h1>
+      <h1>{currentRecipe.name}</h1>
       <ul>
         {currentRecipe.versions[currentVersion].hasOwnProperty('difficulty') ? (
           <li>
@@ -46,7 +46,7 @@ const DisplayedRecipe = () => {
       </ul>
       <h3>Ingredients</h3>
       <div>
-        {currentRecipe.versions[currentVersion].ingredientLis.map(
+        {currentRecipe.versions[currentVersion].ingredientList.map(
           (ingredient, i) => (
             <Ingredient ingredient={ingredient} key={i} />
           )

@@ -6,6 +6,7 @@ export const RecipeProvider = (props) => {
   const [recipeList, setRecipeList] = useState([]);
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [currentVersion, setCurrentVersion] = useState(0);
+  const [displayRecipeForm, setDisplayRecipeForm] = useState(false);
 
   useEffect(() => {
     axios.get('/1/list', { params: { noSort: true } }).then(({ data }) => {
@@ -19,6 +20,7 @@ export const RecipeProvider = (props) => {
         list: [recipeList, setRecipeList],
         recipe: [currentRecipe, setCurrentRecipe],
         version: [currentVersion, setCurrentVersion],
+        displayForm: [displayRecipeForm, setDisplayRecipeForm],
       }}
     >
       {props.children}

@@ -10,7 +10,7 @@ const RecipeList = () => {
       {recipeList.map((recipe, i) => (
         <Recipe
           key={recipe._id}
-          name={recipe.versions[0].name}
+          name={recipe.name}
           versions={recipe.versions.map((v) => v.version)}
           index={i}
         />

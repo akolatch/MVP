@@ -1,5 +1,18 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, createContext, useEffect, useRef } from 'react';
 import axios from 'axios';
+
+const useDidUpdate = (callback, deps) => {
+  const hasMount = useRef(false);
+
+  useEffect(() => {
+    if (hasMount.current) {
+      callback();
+    } else {
+      hasMount.current = true;
+    }
+  }, deps);
+};
+
 export const RecipeContext = createContext();
 
 export const RecipeProvider = (props) => {
@@ -22,10 +35,24 @@ export const RecipeProvider = (props) => {
   }
 
   useEffect(() => {
-    axios.get('/1/list', { params: { noSort: true } }).then(({ data }) => {
+    axios.get('/1/list').then(({ data }) => {
       setRecipeList(data);
     });
   }, []);
+
+  // useDidUpdate(() => {
+  //   const recipe = recipeList.filter(
+  //     (recipe) => (recipe.recipe_id = newRecipe.recipe_id)
+  //   );
+  //   setCurrentVersion(0);
+  //   setDisplayRecipeForm(false);
+  //   setCurrentRecipe(recipe);
+  //   setNewRecipe({
+  //     name: '',
+  //     user_id: 1,
+  //     recipe_id: 0,
+  //   });
+  // }, [recipeList]);
 
   return (
     <RecipeContext.Provider

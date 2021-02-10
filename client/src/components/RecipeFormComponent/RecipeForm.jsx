@@ -6,7 +6,10 @@ import NewVersionHook from './NewVersionHook';
 import IngredientInputHook from './IngredientInputHook';
 import IngredientInput from './IngredientInput';
 import AddedIngredient from '../RecipeDisplayComponent/Ingredient';
-
+import ToolHook from './ToolsHook';
+import ExpandingFields from './ExpandingArrayFields';
+import StepHook from './StepsHook';
+import axios from 'axios';
 const literalFields = [
   'servings',
   'time',
@@ -16,7 +19,7 @@ const literalFields = [
 ];
 
 const RecipeForm = () => {
-  const { newUserRecipe } = useContext(RecipeContext);
+  const { list, newUserRecipe } = useContext(RecipeContext);
   const [newRecipe, setNewRecipe] = newUserRecipe;
   const [newVersion, inputField] = NewVersionHook(newRecipe.recipe_id);
   const [displayField, toggleOptionalField] = OptionalFieldHook();
@@ -25,6 +28,8 @@ const RecipeForm = () => {
     setNewIngredient,
     newInputIngredient,
   ] = IngredientInputHook();
+  const [tool, setTool, inputTool] = ToolHook();
+  const [step, setStep, inputStep] = StepHook();
 
   const setName = (e) => {
     setNewRecipe((prevState) => ({
@@ -34,39 +39,62 @@ const RecipeForm = () => {
     console.log(newRecipe);
   };
 
-  const addIngredient = (field) => {
+  const addIngredient = () => {
     const value = [...newVersion.ingredientList, newIngredient];
-    inputField(field, value);
+    inputField('ingredientList', value);
     setNewIngredient({
       amount: '',
       unit: '',
       ingredient: '',
     });
   };
+
+  const addTool = () => {
+    const value = [...newVersion.tools, tool];
+    inputField('tools', value);
+    setTool('');
+  };
+
+  const addStep = () => {
+    const value = [...newVersion.steps, step];
+    inputField('steps', value);
+    setStep('');
+  };
+
+  const submitRecipe = (e) => {
+    e.preventDefault();
+    const newRecipeData = {
+      listData: newRecipe,
+      recipeData: newVersion,
+    };
+
+    axios
+      .post('/1/list', newRecipeData)
+      .then(() => {
+        return axios.get('/1/list');
+      })
+      .then(({ data }) => {
+        list[1](data);
+      });
+  };
+
   return (
     <div>
       <form action=''>
         <label htmlFor=''>Name</label>
+        <br />
+        <br />
         <input
           type='text'
           name='name'
           value={newRecipe.name}
           onChange={setName}
         />
-        {literalFields.map((field, i) => (
-          <OptionalField
-            field={field}
-            display={displayField[field]}
-            toggleView={toggleOptionalField}
-            version={newVersion}
-            onChange={inputField}
-            key={i}
-          />
-        ))}
+        <br />
         <label htmlFor=''>Ingredients</label>
         <br />
-        {newVersion.ingredientList.map((ingredient) => (
-          <AddedIngredient ingredient={ingredient} />
+        {newVersion.ingredientList.map(({ ingredient, i }) => (
+          <AddedIngredient key={i} ingredient={ingredient} />
         ))}
         <IngredientInput
           ingredient={newIngredient}
@@ -76,11 +104,55 @@ const RecipeForm = () => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            addIngredient('ingredientList');
+            addIngredient();
           }}
         >
-          Add Ingredients
+          More Ingredients
         </button>
+        <ExpandingFields
+          ordered={true}
+          fieldList={newVersion.steps}
+          label={'Steps'}
+          field={'steps'}
+          onChange={inputStep}
+          fieldState={step}
+          addToVersion={addStep}
+        />
+        {displayField.tools ? (
+          <ExpandingFields
+            ordered={false}
+            fieldList={newVersion.tools}
+            label={'Tools'}
+            field={'tools'}
+            onChange={inputTool}
+            fieldState={tool}
+            addToVersion={addTool}
+          />
+        ) : (
+          <div>
+            <br />
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                toggleOptionalField('tools', true);
+              }}
+            >
+              Add Tool List
+            </button>
+          </div>
+        )}
+        {literalFields.map((field, i) => (
+          <OptionalField
+            field={field}
+            display={displayField[field]}
+            toggleView={toggleOptionalField}
+            version={newVersion}
+            onChange={inputField}
+            key={`${field}${i}`}
+          />
+        ))}
+        <br />
+        <button onClick={submitRecipe}>Add Recipe</button>
       </form>
     </div>
   );

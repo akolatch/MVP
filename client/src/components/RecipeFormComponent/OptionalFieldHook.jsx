@@ -7,6 +7,7 @@ const OptionalFieldHook = () => {
     difficulty: false,
     time: false,
     active_time: false,
+    tools: false,
   });
 
   const toggleField = (field, flip) => {

@@ -40,19 +40,20 @@ export const RecipeProvider = (props) => {
     });
   }, []);
 
-  // useDidUpdate(() => {
-  //   const recipe = recipeList.filter(
-  //     (recipe) => (recipe.recipe_id = newRecipe.recipe_id)
-  //   );
-  //   setCurrentVersion(0);
-  //   setDisplayRecipeForm(false);
-  //   setCurrentRecipe(recipe);
-  //   setNewRecipe({
-  //     name: '',
-  //     user_id: 1,
-  //     recipe_id: 0,
-  //   });
-  // }, [recipeList]);
+  const recipeWasAdded = () => {
+    const recipe = recipeList.filter(
+      (recipe) => (recipe.recipe_id = newRecipe.recipe_id)
+    );
+    console.log(recipe);
+    setCurrentVersion(0);
+    setDisplayRecipeForm(false);
+    setCurrentRecipe(null);
+    setNewRecipe({
+      name: '',
+      user_id: 1,
+      recipe_id: 0,
+    });
+  };
 
   return (
     <RecipeContext.Provider
@@ -62,6 +63,7 @@ export const RecipeProvider = (props) => {
         version: [currentVersion, setCurrentVersion],
         displayForm: [displayRecipeForm, setDisplayRecipeForm],
         newUserRecipe: [newRecipe, setNewRecipe],
+        recipeWasAdded,
       }}
     >
       {props.children}

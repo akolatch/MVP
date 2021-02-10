@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 
-const NewVersionHook = (recipe_id, user_id) => {
-  const [newVersion, setNewVersion] = useState({
-    recipe_id: recipe_id,
-    ingredientList: [],
-    tools: [],
-    steps: [],
-    user_id: 1,
-  });
+const NewVersionHook = (initialVersionState) => {
+  const [newVersion, setNewVersion] = useState(initialVersionState);
 
   const inputField = (field, value) => {
     setNewVersion((prevState) => ({
@@ -17,7 +11,7 @@ const NewVersionHook = (recipe_id, user_id) => {
     console.log(newVersion);
   };
 
-  return [newVersion, inputField];
+  return [newVersion, setNewVersion, inputField];
 };
 
 export default NewVersionHook;

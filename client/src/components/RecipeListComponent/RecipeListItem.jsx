@@ -2,10 +2,11 @@ import React, { useContext, useState } from 'react';
 import { RecipeContext } from '../RecipeContext.jsx';
 
 const RecipeList = ({ name, versions, index }) => {
-  const { list, recipe, version } = useContext(RecipeContext);
+  const { list, recipe, version, displayForm } = useContext(RecipeContext);
   const [recipeList] = list;
+  const [, setDisplayRecipeForm] = displayForm;
   const [currentRecipe, setCurrentRecipe] = recipe;
-  const [currentVersion, setCurrentVersion] = version;
+  const [, setCurrentVersion] = version;
   const [thisVersion, setThisVersion] = useState(0);
 
   const selectVersion = (e) => {
@@ -15,6 +16,7 @@ const RecipeList = ({ name, versions, index }) => {
 
   const selectRecipe = (e) => {
     e.preventDefault();
+    setDisplayRecipeForm(false);
     setCurrentRecipe(recipeList[index]);
     setCurrentVersion(thisVersion);
     console.log(currentRecipe);

@@ -19,10 +19,21 @@ const literalFields = [
   'source',
 ];
 
+const initialVersionState = {
+  ingredientList: [],
+  tools: [],
+  steps: [],
+  user_id: 1,
+  version: 1,
+};
+
 const RecipeForm = () => {
-  const { list, newUserRecipe } = useContext(RecipeContext);
+  const { list, newUserRecipe, recipeWasAdded } = useContext(RecipeContext);
   const [newRecipe, setNewRecipe] = newUserRecipe;
-  const [newVersion, inputField] = NewVersionHook(newRecipe.recipe_id);
+  initialVersionState.recipe_id = newRecipe.recipe_id;
+  const [newVersion, setNewVersion, inputField] = NewVersionHook(
+    initialVersionState
+  );
   const [displayField, toggleOptionalField] = OptionalFieldHook();
   const [
     newIngredient,
@@ -77,7 +88,10 @@ const RecipeForm = () => {
       .then(({ data }) => {
         list[1](data);
       })
-      .then(() => {});
+      .then(() => {
+        recipeWasAdded();
+        setNewVersion(initialVersionState);
+      });
   };
 
   return (

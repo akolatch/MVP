@@ -1,16 +1,7 @@
 import React, { useState } from 'react';
 
-const useOptionalField = () => {
-  const [displayField, setDisplayField] = useState({
-    ingredientList: false,
-    steps: false,
-    servings: false,
-    source: false,
-    difficulty: false,
-    time: false,
-    active_time: false,
-    tools: false,
-  });
+const useOptionalField = (initialState) => {
+  const [displayField, setDisplayField] = useState(initialState);
 
   const toggleField = (field, flip) => {
     setDisplayField((prevState) => ({

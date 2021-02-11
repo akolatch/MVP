@@ -18,11 +18,11 @@ const ExpandingFields = ({
         ))}
       </ol>
     ) : (
-      <li>
+      <ul>
         {fieldList.map((item, i) => (
           <li key={i}>{item}</li>
         ))}
-      </li>
+      </ul>
     )}
     <input
       placeholder={field}

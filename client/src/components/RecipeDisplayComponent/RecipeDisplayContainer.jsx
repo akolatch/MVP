@@ -3,6 +3,7 @@ import { RecipeContext } from '../RecipeContext.jsx';
 import Recipe from './DisplayedRecipe';
 import DisplayNav from './RecipeDisplayNav';
 import BtnBar from './RecipeDisplayActions';
+import UpdateForm from '../UpdateFormComponent/UpdateFormContainer';
 
 const RecipeDisplayContainer = () => {
   const { displayUpdate } = useContext(RecipeContext);
@@ -11,7 +12,7 @@ const RecipeDisplayContainer = () => {
     <div>
       <DisplayNav />
       {displayUpdateForm ? (
-        <div>Update Form</div>
+        <UpdateForm />
       ) : (
         <div>
           <Recipe />

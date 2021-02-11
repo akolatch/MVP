@@ -2,17 +2,20 @@ import React, { useContext } from 'react';
 import { RecipeContext } from '../RecipeContext.jsx';
 
 const ListDropDown = () => {
-  const { list, recipe, version, displayForm } = useContext(RecipeContext);
+  const { list, recipe, version, displayForm, displayUpdate } = useContext(
+    RecipeContext
+  );
   const [recipeList] = list;
   const [, setDisplayRecipeForm] = displayForm;
   const [currentRecipe, setCurrentRecipe] = recipe;
   const [, setCurrentVersion] = version;
-
+  const [, setDisplayUpdateForm] = displayUpdate;
   const selectRecipe = (e) => {
     e.preventDefault();
     setCurrentVersion(0);
     setCurrentRecipe(recipeList[e.target.value]);
     setDisplayRecipeForm(false);
+    setDisplayUpdateForm(false);
     console.log('here', currentRecipe);
   };
 

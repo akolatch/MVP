@@ -36,16 +36,26 @@ const DisplayedRecipe = () => {
       <div>
         {currentRecipe.versions[currentVersion].ingredientList.map(
           (ingredient, i) => (
-            <Ingredient ingredient={ingredient} key={i} />
+            <Ingredient ingredient={ingredient} key={'i' + i} />
           )
         )}
       </div>
+      {currentRecipe.versions[currentVersion].tools.length > 0 ? (
+        <h3>Tools</h3>
+      ) : null}
+      <ul>
+        {currentRecipe.versions[currentVersion].tools.map((tool, i) => (
+          <li key={'t' + i}>{tool}</li>
+        ))}
+      </ul>
       <h3>Steps</h3>
       <ol>
         {currentRecipe.versions[currentVersion].steps.map((step, i) => (
-          <li key={i}>{step}</li>
+          <li key={'s' + i}>{step}</li>
         ))}
       </ol>
+
+      <ul></ul>
     </div>
   );
 };

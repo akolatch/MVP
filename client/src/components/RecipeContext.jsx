@@ -20,6 +20,7 @@ export const RecipeProvider = (props) => {
   const [currentRecipe, setCurrentRecipe] = useState(null);
   const [currentVersion, setCurrentVersion] = useState(0);
   const [displayRecipeForm, setDisplayRecipeForm] = useState(false);
+  const [displayUpdateForm, setDisplayUpdateForm] = useState(false);
   const [newRecipe, setNewRecipe] = useState({
     name: '',
     user_id: 1,
@@ -63,6 +64,7 @@ export const RecipeProvider = (props) => {
         version: [currentVersion, setCurrentVersion],
         displayForm: [displayRecipeForm, setDisplayRecipeForm],
         newUserRecipe: [newRecipe, setNewRecipe],
+        displayUpdate: [displayUpdateForm, setDisplayUpdateForm],
         recipeWasAdded,
       }}
     >

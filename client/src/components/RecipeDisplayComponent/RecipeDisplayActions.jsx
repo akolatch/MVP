@@ -3,7 +3,10 @@ import { RecipeContext } from '../RecipeContext.jsx';
 import axios from 'axios';
 
 const BtnBar = () => {
-  const { list, recipe, version, displayForm } = useContext(RecipeContext);
+  const { list, recipe, version, displayForm, displayUpdate } = useContext(
+    RecipeContext
+  );
+  const [, setDisplayUpdateForm] = displayUpdate;
   const [currentRecipe, setCurrentRecipe] = recipe;
   const [, setDisplayRecipeForm] = displayForm;
   const [currentVersion, setCurrentVersion] = version;
@@ -47,7 +50,7 @@ const BtnBar = () => {
     setCurrentVersion(e.target.value);
   };
   const updateRecipe = () => {
-    console.log('update');
+    setDisplayUpdateForm(true);
   };
   return (
     <div>

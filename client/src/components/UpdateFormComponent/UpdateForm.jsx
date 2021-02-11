@@ -234,7 +234,6 @@ const UpdateForm = () => {
         <button onClick={saveUpdate}>Save Update</button>
         <button onClick={saveNewVersion}>Save New Version</button>
       </form>
-      <pre>{JSON.stringify(updateRecipe, null, 2)}</pre>
     </div>
   );
 };

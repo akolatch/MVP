@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const mongoUri = 'mongodb://localhost/recipesRolodex';
+// const mongoUri = 'mongodb://localhost/recipesRolodex';
+const mongoUri = 'mongodb://mongo:27017/recipesRolodex';
 
 mongoose.connect(mongoUri, {
   useNewUrlParser: true,

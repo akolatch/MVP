@@ -25,6 +25,7 @@ const MainContainer = () => {
           ) : (
             <div>
               <NewRecipeBtn />
+              <h1>Your Recipes</h1>
               <RecipeList />
             </div>
           )}

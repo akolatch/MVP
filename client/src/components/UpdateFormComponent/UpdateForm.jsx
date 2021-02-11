@@ -8,6 +8,7 @@ import OptionalUpdateField from './OptionalUpdateField.jsx';
 import UpdateArrayField from './UpdateArrayField.jsx';
 import UpdateIngredient from './UpdateIngredient.jsx';
 import useOptionalField from './UseOptionalField.jsx';
+import axios from 'axios';
 
 const literalFields = [
   'servings',
@@ -18,11 +19,13 @@ const literalFields = [
 ];
 
 const UpdateForm = () => {
-  const { recipe, version } = useContext(RecipeContext);
+  const { list, recipe, version, displayUpdate } = useContext(RecipeContext);
+  const [, setDisplayUpdateForm] = displayUpdate;
+  const [, setRecipeList] = list;
   const [tool, setTool, inputTool] = ToolsHook();
   const [step, setStep, inputStep] = StepsHook();
-  const [currentVersion] = version;
-  const [currentRecipe] = recipe;
+  const [currentVersion, setCurrentVersion] = version;
+  const [currentRecipe, setCurrentRecipe] = recipe;
   const [updateRecipe, setUpdateRecipe] = useState({
     ...currentRecipe.versions[currentVersion],
   });
@@ -101,6 +104,50 @@ const UpdateForm = () => {
       };
     });
   };
+
+  const saveUpdate = (e) => {
+    e.preventDefault();
+    const id = updateRecipe._id;
+    delete updateRecipe._id;
+    delete updateRecipe.__v;
+    axios
+      .put(`/version/${id}`, updateRecipe)
+      .then(() => {
+        return axios.get('/1/list');
+      })
+      .then(({ data }) => {
+        setRecipeList(data);
+      })
+      .then(() => {
+        setCurrentVersion(0);
+        setDisplayUpdateForm(false);
+        setCurrentRecipe(null);
+      });
+    // console.log(updateRecipe);
+  };
+
+  const saveNewVersion = (e) => {
+    e.preventDefault();
+    delete updateRecipe._id;
+    delete updateRecipe.__v;
+    const numVersions = currentRecipe.versions.length - 1;
+    updateRecipe.version = currentRecipe.versions[numVersions].version + 1;
+    console.log(updateRecipe);
+    axios
+      .post(`/version`, updateRecipe)
+      .then(() => {
+        return axios.get('/1/list');
+      })
+      .then(({ data }) => {
+        setRecipeList(data);
+      })
+      .then(() => {
+        setCurrentVersion(0);
+        setDisplayUpdateForm(false);
+        setCurrentRecipe(null);
+      });
+  };
+
   return (
     <div>
       <form action=''>
@@ -184,8 +231,8 @@ const UpdateForm = () => {
             />
           ))}
         </ul>
-        <button>Update Version</button>
-        <button>Update Version</button>
+        <button onClick={saveUpdate}>Save Update</button>
+        <button onClick={saveNewVersion}>Save New Version</button>
       </form>
       <pre>{JSON.stringify(updateRecipe, null, 2)}</pre>
     </div>

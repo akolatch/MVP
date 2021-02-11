@@ -36,7 +36,7 @@ module.exports = {
 
   addVersion: async (req, res) => {
     try {
-      const recipeData = req.body.recipeData;
+      const recipeData = req.body;
       recipeData.created_at = Date.now();
       await models.createVersion(recipeData);
       res.sendStatus(201);
